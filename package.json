@@ -1,0 +1,23 @@
+{
+    "name": "mongo2sql",
+    "version": "1.0.0",
+    "description": "Translates MongoDB .find() queries into valid SQL queries",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "npm test",
+        "start:dev": "ts-node src/index.ts",
+        "start": "node dist/index.js"
+    },
+    "author": "Alexis Solano <hello@alexisdev.me>",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "mongodb-query-parser": "^4.1.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5"
+    },
+    "devDependencies": {
+        "prettier": "3.2.5"
+    }
+}

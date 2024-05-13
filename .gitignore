@@ -1,0 +1,9 @@
+# Project
+node_modules
+dist
+output
+input.local.js
+
+# OS metadata
+.DS_Store
+Thumbs.db
