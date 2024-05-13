@@ -3,6 +3,7 @@ node_modules
 dist
 output
 input.local.js
+.env
 
 # OS metadata
 .DS_Store
