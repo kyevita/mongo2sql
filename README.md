@@ -30,6 +30,8 @@ npm run start:dev
 
 To copile a production version you can use the `npm run build` command, and then use `npm start` to run the program.
 
+You can also personalize the input file path and output folder by using a .env file, there is an example on the root of the project, you can copy it, rename it as `.env` and change the options according to your needs.
+
 ## Inputs
 
 There is a default `input.js` file containing a few query examples, you can create a copy of this file and name it as you wish, and then just modify the INPUT_FILE_NAME variable on your .env with the new name of your input file.
