@@ -4,6 +4,8 @@
     "description": "Translates MongoDB .find() queries into valid SQL queries",
     "main": "dist/index.js",
     "scripts": {
+        "test": "jest",
+        "test:coverage": "jest --coverage",
         "build": "tsc",
         "start:dev": "ts-node src/index.ts",
         "start": "node dist/index.js"
@@ -17,6 +19,9 @@
         "typescript": "^5.4.5"
     },
     "devDependencies": {
-        "prettier": "3.2.5"
+        "@jest/globals": "^29.7.0",
+        "@types/jest": "^29.5.12",
+        "prettier": "3.2.5",
+        "ts-jest": "^29.1.2"
     }
 }

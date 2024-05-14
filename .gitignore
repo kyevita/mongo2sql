@@ -4,6 +4,7 @@ dist
 output
 input.local.js
 .env
+coverage
 
 # OS metadata
 .DS_Store
