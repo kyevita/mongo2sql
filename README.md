@@ -41,3 +41,14 @@ There is a default `input.js` file containing a few query examples, you can crea
 Once the program has run successfully, a new file should be created under the `output` folder, containing the input and output for each of the queries listed in the `inputs.js` file.
 
 If there are any errors through the program's execution, there will be error outputs specifying the error and the output that causes it.
+
+## Testing
+The application includes unit tests for the classes, to run these you can use the following command:
+```
+npm t
+```
+
+If you want to get a coverage report of the tests, you can use:
+```
+npm run test:coverage
+```
