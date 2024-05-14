@@ -22,15 +22,15 @@ db.users.find({ age: { $gte: 23 } }, { name: 1, email: 1 }); // => SELECT name, 
 You need Node v20 >= to run this project.
 
 To install the dependencies, just run `npm i` on the main root of the project.
-Once dependencides are installed we can run the application on development mode using:
+Once dependencies are installed we can run the application on development mode using:
 
 ```typescript
 npm run start:dev
 ```
 
-To copile a production version you can use the `npm run build` command, and then use `npm start` to run the program.
+To compile a production version you can use the `npm run build` command, and then use `npm start` to run the program.
 
-You can also personalize the input file path and output folder by using a .env file, there is an example on the root of the project, you can copy it, rename it as `.env` and change the options according to your needs.
+You can also personalize the input file path and output folder by using a .env file, there is an example on the root of the project, you can copy it, rename it as `.env`, and change the options according to your needs.
 
 ## Inputs
 
@@ -38,6 +38,6 @@ There is a default `input.js` file containing a few query examples, you can crea
 
 ## Outputs
 
-Once the program has run succesfully, a new file should be created under the `output` folder, this will contain the input and output for each of the queries listed in the `inputs.js` file.
+Once the program has run successfully, a new file should be created under the `output` folder, containing the input and output for each of the queries listed in the `inputs.js` file.
 
-If there is any errors through the execution of the program, there will be error outputs specifying the error and the ouput that cause it.
+If there are any errors through the program's execution, there will be error outputs specifying the error and the output that causes it.
