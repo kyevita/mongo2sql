@@ -90,13 +90,13 @@ export default class MongoQuery extends Query<
         const hasFields = Object.keys(this.fields).length > 0;
         const statement = `db.${this.collection}.${this.action}`;
         const params = `(${toJSString(this.conditions, 0)}${
-            hasFields ? `, ${toJSString(this.fields, 0)}` : ''
-        })`;
+            hasFields ? `,${toJSString(this.fields, 0)}` : ''
+        });`;
 
         return statement + params;
     }
 
-    public buildQuery(): string {
+    public build(): string {
         return this._rawQuery;
     }
 }

@@ -2,11 +2,12 @@ import MongoQuery, {
     MongoFieldsType,
     MongoOperatorType,
 } from '../classes/query/MongoQuery';
-import SqlCondition, {
-    SqlLogicalOperatorType,
-    SqlOperatorType,
-} from '../classes/SqlCondition';
+import SqlCondition, { SqlOperatorType } from '../classes/SqlCondition';
 import SqlQuery, { SqlActions } from '../classes/query/SqlQuery';
+import SqlLogicalOperator, {
+    SqlLogicalOperatorChildType,
+    SqlLogicalOperatorType,
+} from '../classes/SqlLogicalOperator';
 
 const MONGO_TO_SQL_OPERATORS: { [key in MongoOperatorType]: SqlOperatorType } =
     {
@@ -42,12 +43,10 @@ export default class QueryTranslatorService {
         operator: SqlLogicalOperatorType,
         value: any
     ) {
-        const parentCondition = new SqlCondition(operator);
+        const parentCondition = new SqlLogicalOperator(operator);
 
         for (const conditions of value) {
-            parentCondition.addChildCondition(
-                this._buildSqlQueryConditions(conditions)
-            );
+            parentCondition.addChild(this._buildSqlQueryConditions(conditions));
         }
 
         return parentCondition;
@@ -57,8 +56,8 @@ export default class QueryTranslatorService {
         operator: SqlOperatorType,
         value: any,
         parentKey: string = ''
-    ) {
-        if (SqlCondition.isLogicalOperator(operator)) {
+    ): SqlLogicalOperatorChildType {
+        if (SqlLogicalOperator.isLogicalOperator(operator)) {
             return this._handleLogicalOperators(operator, value);
         } else {
             return new SqlCondition(operator, parentKey, value);
@@ -68,23 +67,23 @@ export default class QueryTranslatorService {
     private _buildSqlQueryConditions(
         query: any,
         parentField?: string
-    ): SqlCondition {
+    ): SqlLogicalOperator {
         const queryEntries = Object.entries(query);
-        const parentCondition = new SqlCondition('AND');
+        const parentCondition = new SqlLogicalOperator('AND');
 
         for (const [fieldOrOperator, value] of queryEntries) {
             const operator = this._getSqlOperator(fieldOrOperator);
 
             if (operator) {
-                parentCondition.addChildCondition(
+                parentCondition.addChild(
                     this._handleOperator(operator, value, parentField)
                 );
             } else if (typeof value === 'object') {
-                parentCondition.addChildCondition(
+                parentCondition.addChild(
                     this._buildSqlQueryConditions(value, fieldOrOperator)
                 );
             } else {
-                parentCondition.addChildCondition(
+                parentCondition.addChild(
                     this._handleOperator('=', value, fieldOrOperator)
                 );
             }

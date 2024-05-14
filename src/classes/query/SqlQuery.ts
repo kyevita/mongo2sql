@@ -1,4 +1,4 @@
-import SqlCondition from '../SqlCondition';
+import SqlLogicalOperator from '../SqlLogicalOperator';
 import Query from './Query';
 
 export enum SqlActions {
@@ -8,18 +8,18 @@ export enum SqlActions {
 export default class SqlQuery extends Query<
     SqlActions,
     string[],
-    SqlCondition
+    SqlLogicalOperator
 > {
     constructor(
         action: SqlActions,
         fields: string[],
         table: string,
-        condition: SqlCondition
+        condition: SqlLogicalOperator
     ) {
         super(action, table, condition, fields);
     }
 
-    public buildQuery(): string {
+    public build(): string {
         let fields = this.fields.join(', ');
 
         if (!fields.length) {
@@ -28,6 +28,6 @@ export default class SqlQuery extends Query<
 
         return `${this.action} ${fields} FROM ${
             this.collection
-        } WHERE ${this.conditions.buildCondition()};`;
+        } WHERE ${this.conditions.build()};`;
     }
 }

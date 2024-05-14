@@ -1,8 +1,11 @@
+import { BuilderInterface } from '../../interfaces/BuilderInterface';
+
 export default abstract class Query<
     ActionType,
     FieldsType = string[],
     ConditionsType = string,
-> {
+> implements BuilderInterface
+{
     protected _action: ActionType;
     protected _fields: FieldsType;
     protected _collection: string;
@@ -36,5 +39,5 @@ export default abstract class Query<
         return this._conditions;
     }
 
-    public abstract buildQuery(): string;
+    public abstract build(): string;
 }

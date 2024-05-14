@@ -60,7 +60,7 @@ export default class App {
 
         return {
             mongoInput: rawQuery,
-            sqlOutput: sqlQuery.buildQuery(),
+            sqlOutput: sqlQuery.build(),
         };
     }
 

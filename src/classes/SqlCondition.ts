@@ -1,3 +1,6 @@
+import { SqlLogicalOperatorType } from './SqlLogicalOperator';
+import { BuilderInterface } from '../interfaces/BuilderInterface';
+
 export type SqlConditionOperatorType =
     | '='
     | '!='
@@ -6,34 +9,33 @@ export type SqlConditionOperatorType =
     | '<'
     | '<='
     | 'IN';
-export type SqlLogicalOperatorType = 'AND' | 'OR';
-export type SqlOperatorType = SqlConditionOperatorType | SqlLogicalOperatorType;
-export type SqlValueType = string | number | any[];
 
-export enum SqlLogicalOperatorEnum {
-    AND = 'AND',
-    OR = 'OR',
+export enum SqlConditionOperatorEnum {
+    '=' = '=',
+    '!=' = '!=',
+    '>=' = '>=',
+    '>' = '>',
+    '<' = '<',
+    '<=' = '<=',
+    'IN' = 'IN',
 }
 
-export default class SqlCondition {
-    private _operator: SqlOperatorType;
+export type SqlOperatorType = SqlConditionOperatorType | SqlLogicalOperatorType;
+export type SqlValueType = string | number | boolean | any[];
+
+export default class SqlCondition implements BuilderInterface {
     private _field: string;
+    private _operator: SqlConditionOperatorType;
     private _value: SqlValueType;
-    private _children: SqlCondition[];
 
-    constructor(operator: SqlOperatorType);
-    constructor(operator: SqlOperatorType, field: string, value: string);
-    constructor(operator: SqlOperatorType, field?: string, value?: string) {
+    constructor(
+        operator: SqlConditionOperatorType,
+        field: string,
+        value: SqlValueType
+    ) {
+        this._field = field;
         this._operator = operator;
-        this._field = field ?? '';
-        this._value = value ?? '';
-        this._children = [];
-    }
-
-    public static isLogicalOperator(
-        value: any
-    ): value is SqlLogicalOperatorType {
-        return !!SqlLogicalOperatorEnum[value];
+        this._value = value;
     }
 
     private _parseValue(value: SqlValueType) {
@@ -46,32 +48,7 @@ export default class SqlCondition {
         }
     }
 
-    private _buildLogicalOperator() {
-        const childrenLength = this._children.length;
-        let output = childrenLength > 1 ? '(' : '';
-
-        for (let i = 0; i < childrenLength; i++) {
-            output += this._children[i].buildCondition();
-
-            if (i + 1 < childrenLength) {
-                output += ` ${this._operator} `;
-            }
-        }
-
-        output += childrenLength > 1 ? ')' : '';
-
-        return output;
-    }
-
-    public buildCondition() {
-        if (SqlCondition.isLogicalOperator(this._operator)) {
-            return this._buildLogicalOperator();
-        }
-
+    public build() {
         return `${this._field} ${this._operator} ${this._parseValue(this._value)}`;
-    }
-
-    public addChildCondition(condition: SqlCondition) {
-        this._children.push(condition);
     }
 }
